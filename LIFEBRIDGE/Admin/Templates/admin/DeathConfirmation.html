@@ -1,0 +1,47 @@
+{% extends 'Admin/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table border="1" align="center">
+        <tr>
+            <td>Sl.no</td>
+            <td>Donor Name</td>
+            <td>Address</td>
+            <td>Date of Birth</td>
+            <td>Blood Group</td>
+            <td>Certificate</td>
+            <td>Confirmed Nominee</td>
+            <td>Action</td>
+        </tr>
+        {%  for i in data %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.donor.user.user_name}}</td>
+                <td>{{i.donor.user.user_address}}</td>
+                <td>{{i.donor.donateform_DOB}}</td>
+                <td>{{i.donor.bloodgroup.bloodgroup_name}}</td>
+                <td><a href="{{i.death_certificate.url}}" download>View</a></td>
+                <td>{{i.nominee_name}}</td>
+                <td>{% if i.case_status == '0' %}
+                    <a href="{% url 'Wadmin:Accept' i.id %}">Confirm</a>|<a href="{% url 'Wadmin:Reject' i.id %}">Not Confirm</a>
+                    {% elif i.case_status == '1' %}
+                    Confirmed
+                    {% else %}
+                    Wrong Report
+                    {% endif %}
+                </td>
+        
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock content %}

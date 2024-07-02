@@ -1,0 +1,51 @@
+{% extends 'User/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <br><br><br><br><br><br><br>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table align="center" border="10" cellpadding="5">
+            <tr>
+                <td>Organs</td>
+                <td>
+                    {% for i in org_data %}
+                        <input type="checkbox" name="selected_organs" value="{{ i.id }}">{{ i.organ_name }}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" name="btn_save" value="Save">
+                    <input type="reset" name="btn_cancel" value="Cancel">
+                </td>
+            </tr>
+        </table>
+    </form> 
+    <table align="center" border="2">
+        <tr>
+            <td>Sl.no</td>
+            <td>Organs</td>
+            <td>ACTION</td>
+        </tr>
+        {% for i in org %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ i.organs.organ_name }}</td>
+            <td>
+                <a href="{% url 'User:DelOrgan' i.id  %}"> Delete </a>
+            </td>
+        </tr>
+        {% endfor %} 
+    </table>
+</body>
+</html>
+{% endblock content %}

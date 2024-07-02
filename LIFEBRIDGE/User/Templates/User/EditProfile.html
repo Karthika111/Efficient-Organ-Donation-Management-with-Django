@@ -1,0 +1,42 @@
+{% extends 'User/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Edit Profile</title>
+</head>
+<body>
+    <br><br><br><br><br><br><br><br><br>
+    
+<form action="" method="post">
+    {% csrf_token%}
+    <table align="center" border="5" cellpadding="5">
+        <tr>
+            <td>Name</td>
+            <td><input type="text" name="txt_username" id="txt_username" value="{{user.user_name}}"></td>
+        </tr>
+       
+        <tr>
+            <td>Contact</td>
+            <td><input type="text" name="txt_usercontact" id="txt_usercontact" value="{{user.user_contact}}"></td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td><input type="textarea" name="txt_useraddress" id="txt_useraddress" value="{{user.user_address}}"></td>
+        </tr>
+        
+        <tr>
+            <td colspan="2" align="center"><input type="submit" value="Save"> <input type="reset" value="Cancel"></td>
+            
+        </tr>
+    </table>
+</form>
+
+
+</body>
+</html>
+{% endblock content %}

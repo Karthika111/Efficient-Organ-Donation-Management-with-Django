@@ -1,0 +1,39 @@
+{% extends 'Admin/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table align="center" border="2">
+            <tr>
+                <td>Sl.no</td>
+                <td>Name</td>
+                <td>Relation</td>
+                <td>Email</td>
+                <td>Proof</td>
+            </tr>
+            {% for i in data %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.nominee_name}}</td>
+                <td>{{i.nominee_relation}}</td>
+                <td>{{i.nominee_email}}</td>
+                <td><a href="{{i.nominee_proof.url}}" download>View</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+
+</html>
+{% endblock content %}

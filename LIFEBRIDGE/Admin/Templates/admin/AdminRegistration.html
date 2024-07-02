@@ -1,0 +1,64 @@
+{% extends 'Admin/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form name="frmAdmin" method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="txtname" placeholder="Enter Name" value="{{editdata.admin_name}}" required></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="email" name="txtemail" placeholder="Enter Email"value="{{editdata.admin_email}}" required></td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td><input type="text" name="txtcontact" placeholder="Enter Contact"value="{{editdata.admin_contact}}" required></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="password" name="txtpassword" placeholder="Enter Password"value="{{editdata.admin_password}}" required></td>
+            </tr>
+            <tr>
+                
+                <td colspan="2" align="center">
+                    <input type="submit" name="btnsubmit" value="Save">
+                    <input type="reset" name="btncancel" value="Cancel">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
+<table border="3" align="center" cellpadding="10">
+    <tr>
+        <td>SI no.</td>
+        <td>Name</td>
+        <td>Email</td>
+        <td>Contact</td>
+        <td>Password</td>
+        <td>action</td>
+    </tr>
+    {%  for i in adminData   %}
+    <tr>
+        <td>{{forloop.counter}}</td> 
+        <td>{{i.admin_name}}</td>
+        <td>{{i.admin_email}}</td>
+        <td>{{i.admin_contact}}</td>
+        <td>{{i.admin_password}}</td>
+        <td><a href="{% url 'Wadmin:deleteAdmin' i.id  %}">Delete
+        <a href="{% url 'Wadmin:UpdateAdmin' i.id  %}">Edit</a></td>
+    </tr>
+    {% endfor  %}
+</table>
+{% endblock content %}

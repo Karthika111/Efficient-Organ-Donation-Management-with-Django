@@ -1,0 +1,56 @@
+{% extends 'User/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table border="1" align="center">
+            <tr>
+                <td>Certificate</td>
+                <td><input type="file" name="Certificate"></td>
+            </tr>
+            <tr>
+                <td>Confirmed Nominee</td>
+                <td><input type="text" name="cnominee"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" name="save" value="Save">
+                    <input type="reset" name="cancel" value="Cancel">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table border="1" align="center">
+        <tr>
+            <td>Sl.no</td>
+            <td>Certificate</td>
+            <td>Confirmed Nominee</td>
+            <td>Action</td>
+        </tr>
+        {%  for i in data %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td><a href="{{i.death_certificate.url}}" download>View</a></td>
+                <td>{{i.nominee_name}}</td>
+                <td>{% if i.case_status == '0' %}
+                    <a href="{% url 'User:DeleteDeath' i.id %}">Delete</a>
+                    {% elif i.case_status == '1' %}
+                    Confirmed
+                    {% else %}
+                    Wrong Report
+                    {% endif %}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock content %}

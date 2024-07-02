@@ -1,0 +1,64 @@
+{% extends 'Admin/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place</title>
+</head>
+<body>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table align="center" border="10" cellpadding="5">
+            <tr>
+                <td>District</td>
+                <td><select name="ddl_district" id="district" value="{{plc.district}}">
+                    <option value="">--OPTIONS--</option>
+                    {% for i in district %}
+                    <option value="{{i.id}}"{% if i.id == plc.district.id %} selected {% endif %}>{{i.district_name}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+            <tr>
+                <td>Place</td>
+                <td><input type="text" name="ddl_place" id="place" value="{{plc.place_name}}"></td>
+            </tr>
+            
+            <tr>
+                <td colspan="2" align="center" cellpadding="5">
+                    <input type="submit" value="Save"><input type="reset" value="Cancel"></td>
+                
+            </tr>
+        </table>
+    </form>
+    <br><br><br>
+
+    <table align="center" border="10" cellpadding="10">
+        <tr>
+            <td>SI NO</td>
+            <td>Place name</td>
+            
+            <td>District</td>
+            <td>Action</td>
+        </tr>
+        {% for i in place %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.place_name}}</td>
+            
+           <td>{{i.district.district_name}}</td>
+           <td><a href="{% url 'Wadmin:DelPlace' i.id %}">Delete</a>
+            <a href="{% url 'Wadmin:EditPlace' i.id  %}">Edit</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+
+
+</body>
+</html>
+{% endblock content %}

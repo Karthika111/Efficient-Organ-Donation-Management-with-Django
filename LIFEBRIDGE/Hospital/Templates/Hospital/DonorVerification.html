@@ -1,0 +1,60 @@
+{% extends 'Hospital/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <br><br><br><br><br><br><br>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table align="center" border="2">
+            <tr>
+                <td>Sl.no</td>
+                <td>Name</td>
+                <td>Photo</td>
+                <td>Address</td>
+                <td>Contact</td>
+                <td>Email</td>
+                <td>Gender</td> 
+                <td>Blood Group</td>
+                <td>DOB</td>
+                <td>View</td>
+                <td>ACTION</td>
+            </tr>
+            {% for i in data %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.user.user_name}}</td>
+                <td><img src="{{i.user.user_photo.url}}" width="150" height="150"></td>
+                <td>{{i.user.user_address}}</td>
+                <td>{{i.user.user_contact}}</td>
+                <td>{{i.user.user_email}}</td>
+                <td>{{i.donateform_gender}}</td>
+                <td>{{i.bloodgroup.bloodgroup_name}}</td>
+                <td>{{i.donateform_DOB}}</td>
+                <td><a href="{% url 'Hospital:Nominee' i.id %}">Nominee</a>|
+                    <a href="{% url 'Hospital:Organ' i.id %}">Organ</a></td>
+                </td>
+                <td>{%  if i.donateform_status == '0' %}
+                    <a href="{% url 'Hospital:Accept' i.id %}">Accept</a>|<a href="{% url 'Hospital:Reject' i.id %}">Reject</a>
+                    {%  elif i.donateform_status == '1' %}
+                    Accepted
+                    {% else %}
+                    Rejected
+                {% endif %}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+
+</html>
+{% endblock content %}

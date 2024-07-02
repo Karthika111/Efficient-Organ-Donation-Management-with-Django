@@ -1,0 +1,47 @@
+{% extends 'User/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <br><br><br><br><br><br><br>
+    <table border="1" align="center">
+        <tr>
+            <td>Sl.no</td>
+            <td>Patient name</td>
+            <td>Photo</td>
+            <td>Email</td>
+            <td>Contact</td>
+            <td>Address</td>
+            <td>Organ</td>
+            <td>Action</td>
+        </tr>
+        {% for i in data %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.patient.user.user_name}}</td>
+            <td><img src="{{i.patient.user.user_photo.url}}" width="150" height="150"></td>
+            <td>{{i.patient.user.user_email}}</td>
+            <td>{{i.patient.user.user_contact}}</td>
+            <td>{{i.patient.user.user_address}}</td>
+            <td>{{i.patient.organdata.organ_name}}</td>
+            <td>{% if i.request_status == '0' %}
+                <a href="{% url 'User:Accept' i.id %}">Accept</a>|<a href="{% url 'User:Reject' i.id %}">Reject</a>
+                {% elif i.request_status == '1' %}
+                Accepted
+                {% else%}
+                Rejected
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock content %}

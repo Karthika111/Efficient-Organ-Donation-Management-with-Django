@@ -1,0 +1,53 @@
+{% extends 'Hospital/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table align="center" border="2">
+            <tr>
+                <td>Sl.no</td>
+                <td>Name</td>
+                <td>Photo</td>
+                <td>Address</td>
+                <td>Contact</td>
+                <td>Email</td>
+                <td>Gender</td> 
+                <td>DOB</td>
+                <td>Blood Group</td>
+                <td>Consulting Hospital</td>
+                <td>Transplanting Organ</td>
+                <td>ACTION</td>
+            </tr>
+            {% for i in patient %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{patient_name}}</td>
+                <td>{{patient_photo}}</td>
+                <td>{{patient_address}}</td>
+                <td>{{patient_contact}}</td>
+                <td>{{patient_email}}</td>
+                <td>{{patient_gender}}</td>
+                <td>{{patient_dob}}</td>
+                <td>{{patient_bloodgroup}}</td>
+                <td>{{patient_consultinghospital}}</td>
+                <td>{{patient_transplantingorgan}}</td>
+                <td><a href="{% url 'Hospital:Match' i.id  %}">Match
+                </a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+</html>
+{% endblock content %}     

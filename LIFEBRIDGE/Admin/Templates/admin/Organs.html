@@ -1,0 +1,38 @@
+{% extends 'Admin/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table align="center" border="10" cellpadding="5">
+    <tr>
+    <td>Organ</td>
+    <td><input type="text" name="txt_organ" value="{{org_data.organ_name}}"></td></tr>
+    <tr><td colspan="2" align="center"><input type="submit" name="btn_save" value="Save">
+        <input type="reset" name="btn_cancel" value="Cancel"></td>
+        </tr></table>
+        <table align="center" border="2">
+            <tr><td>Sl.no</td>
+            <td>Organs</td>
+            <td>ACTION</td></tr>
+            {% for i in org %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.organ_name}}</td>
+                <td><a href="{% url 'Wadmin:DelOrgan' i.id  %}"> Delete 
+                    <a href="{% url 'Wadmin:EditOrgan' i.id  %}">Edit</a></td>
+            </tr>
+            {% endfor %} 
+        </table> 
+    
+</body>
+</html>
+{% endblock content %}

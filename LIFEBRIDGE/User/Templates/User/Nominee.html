@@ -1,0 +1,58 @@
+{% extends 'User/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <br><br><br><br><br><br><br>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table align="center" border="10" cellpadding="5">
+        <tr>
+    <td>Name</td>
+    <td><input type="text" name="txt_name"></td></tr>
+    <tr>
+        <td>Relation</td>
+        <td><input type="text" name="txt_relation" id="relation" >
+            </td>
+    </tr>
+    <tr><td>Email</td>
+        <td><input type="email" name="txt_email"></td></tr>
+    
+    <tr><td>Proof</td>
+        <td><input type="file" name="file_proof"></td></tr>
+        <tr><td colspan="2" align="center"><input type="submit" name="btn_save" value="Save">
+            <input type="reset" name="btn_cancel" value="Cancel"></td>
+            </tr></table>
+            <table align="center" border="2">
+                <tr><td>Sl.no</td>
+                <td>Name</td>
+                <td>Relation</td>
+                <td>Email</td>
+                <td>Proof</td>
+                <td>ACTION</td></tr>
+                {% for i in nominee %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{i.nominee_name}}</td>
+                    <td>{{i.nominee_relation}}</td>
+                    <td>{{i.nominee_email}}</td>
+                    <td><a href="{{i.nominee_proof.url}}" download> View 
+                    </a></td>
+                    <td><a href="{% url 'User:DelNominee' i.id  %}"> Delete 
+                    </a></td>
+                </tr>
+                {% endfor %} 
+            </table>        
+        
+        </form> 
+    
+</body>
+</html>
+{% endblock content %}

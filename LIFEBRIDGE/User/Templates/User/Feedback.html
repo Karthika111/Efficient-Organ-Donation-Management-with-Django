@@ -1,0 +1,69 @@
+{% extends 'User/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        /* Additional custom styles if needed */
+    </style>
+</head>
+<body>
+    <br><br><br><br><br><br><br>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>Feedback</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form method="post">
+                    {% csrf_token %} 
+                    <div class="form-group">
+                        <label for="txtpro">Feedback</label>
+                        <textarea class="form-control" id="txtpro" name="txtpro" rows="3"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="reset" class="btn btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Sl.no</th>
+                            <th>Feedback</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in feedback %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{i.feedback_content}}</td>
+                            <td>{{i.feedback_date}}</td>
+                            <td><a href="{% url 'User:Delfeedback' i.id %}" class="btn btn-danger">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS (Optional) -->
+    <!-- <script src="{% static 'js/bootstrap.min.js' %}"></script> -->
+</body>
+</html>
+{% endblock content %}

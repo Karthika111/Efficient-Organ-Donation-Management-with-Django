@@ -1,0 +1,37 @@
+{% extends 'Admin/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table align="center" border="2">
+            <tr>
+       <td>District</td><td><input type="text" name="ddl_district" value="{{dis_data.district_name}}"></td></tr>
+       <tr><td><input type="submit" name="btn_submit" value="Save">
+        <input type="reset" name="btn_cancel" value="Cancel"></td></tr>
+        </table><br>
+        <table align="center" border="2">
+            <tr><td>Sl.no</td>
+            <td>District</td>
+            <td>ACTION</td></tr>
+            {% for i in dis %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.district_name}}</td>
+                <td><a href="{% url 'Wadmin:DelDistrict' i.id %}"> Delete 
+                    <a href="{% url 'Wadmin:EditDistrict' i.id %}">Edit </a> </td>
+            </tr>
+            {% endfor %}
+        </table>
+    
+</body>
+</html>
+{% endblock content %}

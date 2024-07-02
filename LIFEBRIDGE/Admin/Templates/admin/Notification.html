@@ -1,0 +1,49 @@
+{% extends 'Admin/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form name="frmAdmin" method="POST">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Title</td>
+                <td><input type="text" name="txttitle" placeholder="Enter Title" value="{{editdata.notif_title}}" required></td>
+            </tr>
+            <tr>
+                <td>Notification</td>
+                <td><input type="textarea" name="txtnotification" placeholder="Enter notification"value="{{editdata.notif_details}}" required></td>
+            </tr>
+            <tr>
+                
+                <td colspan="2" align="center">
+                    <input type="submit" name="btnsubmit" value="Save">
+                    <input type="reset" name="btncancel" value="Cancel">
+                </td>
+</body>
+</html>
+<table border="3" align="center" cellpadding="10">
+    <tr>
+        <td>SI no.</td>
+        <td>Title</td>
+        <td>Notification</td>
+        <td>action</td>
+    </tr>
+    {%  for i in notifData   %}
+    <tr>
+        <td>{{forloop.counter}}</td> 
+        <td>{{i.notif_title}}</td>
+        <td>{{i.notif_details}}</td>
+        <td><a href="{% url 'Wadmin:deleteNotification' i.id  %}">Delete
+        <a href="{% url 'Wadmin:UpdateNotification' i.id  %}">Edit</a></td>
+    </tr>
+    {% endfor  %}
+</table>
+{% endblock content %}

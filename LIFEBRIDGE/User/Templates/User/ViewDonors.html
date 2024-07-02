@@ -1,0 +1,51 @@
+{% extends 'User/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!-- donation_form_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Forms</title>
+    <style>
+        .card {
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            float: left;
+        }
+        .card img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <br><br><br><br><br><br><br>
+    <h1>Donation Forms</h1>
+    <div class="card-container">
+        {% for i in donation_forms %}
+        <div class="card">
+            <img src="{{ i.donor.user.user_photo.url }}" alt="User Photo">
+            <p>Name: {{ i.donor.user.user_name }}</p>
+            <p>Contact: {{ i.donor.user.user_contact }}</p>
+            <p>Email: {{ i.donor.user.user_email }}</p>
+            <p>Address: {{ i.donor.user.user_address }}</p>
+            <p>Gender: {{ i.donor.donateform_gender }}</p>
+            <p>Date of Birth: {{ i.donor.donateform_DOB }}</p>
+            <p>Blood Group: {{ i.donor.bloodgroup.bloodgroup_name }}</p>
+            <!-- <p>Organ: {{ i.donor.organ.organ_name }}</p> Add organ field from your model -->
+            <!-- <p>Status: {{ form.donateform_status }}</p> -->
+            <p><a href="{% url 'User:DonationRequest' i.donor.id %}">Request</a></p>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
+
+{% endblock content %}

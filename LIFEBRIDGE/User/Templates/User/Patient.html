@@ -1,0 +1,112 @@
+{% extends 'User/Header.html' %}
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <br><br><br><br><br><br><br>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <table align="center" border="10" cellpadding="5">
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="txt_name" value="{{user.user_name}}"></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input type="text" name="txt_address" value="{{user.user_address}}" ></td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td><input type="number" name="txt_contact" value="{{user.user_contact}}"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="email" name="txt_email" value="{{user.user_email}}"></td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td><input type="radio" name="rdo_gender" value="Female">Female
+                    <input type="radio" name="rdo_gender" value="Male">Male
+                </td>
+            </tr>
+            <tr>
+                <td>Blood Group</td>
+                <td><select name="txt_bloodgroup" id="bloodgroup">
+                        <option value="">--select--</option>
+                        {% for i in bloodgroup %}
+                        <option value="{{i.id}}">{{i.bloodgroup_name}}</option>
+                        {% endfor %}
+                    </select></td>
+            </tr>
+
+            <tr>
+                <td>DOB</td>
+                <td><input type="date" name="txt_dob"></td>
+            </tr>
+            <tr>
+                <td>Consulting Hospital</td>
+                <td><input type="text" name="txt_hospital"></td>
+            </tr>
+            <td>Needed Organ</td>
+            <td><select name="neededorgan" id="neededorgan" >
+                    <option value="">--select--</option>
+                    {% for i in neededorgan %}
+                    <option value="{{i.id}}">{{i.organ_name}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+
+            <tr>
+                <td colspan="2" align="center"><input type="submit" name="btn_save" value="Save">
+                    <input type="reset" name="btn_cancel" value="Cancel">
+                </td>
+            </tr>
+        </table>
+        <table align="center" border="2">
+            <tr>
+                <td>Sl.no</td>
+                <td>Name</td>
+                <td>Photo</td>
+                <td>Address</td>
+                <td>Contact</td>
+                <td>Email</td>
+                <td>Gender</td>
+                <td>DOB</td>
+                <td>Blood Group</td>
+                <td>Consulting Hospital</td>
+                <td>Transplanting Organ</td>
+                <td>ACTION</td>
+            </tr>
+            {% for i in patient %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.user.user_name}}</td>
+                <td><img src="{{i.user.user_photo.url}}" width="150" height="150"></td>
+                <td>{{i.user.user_address}}</td>
+                <td>{{i.user.user_contact}}</td>
+                <td>{{i.user.user_email}}</td>
+                <td>{{i.patient_gender}}</td>
+                <td>{{i.patient_DOB}}</td>
+                <td>{{i.patient_bloodgroup.bloodgroup_name}}</td>
+                <td>{{i.patient_consultinghospital}}</td>
+                <td>{{i.organdata.organ_name}}</td>
+                <td><a href="{% url 'User:DelPatient' i.id  %}"> Delete
+                    </a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </form>
+</body>
+
+</html>
+{% endblock content %}

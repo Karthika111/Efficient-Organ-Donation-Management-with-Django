@@ -1,0 +1,104 @@
+{% extends 'User/Header.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donate Form</title>
+</head>
+<body>
+    <br><br><br><br><br><br><br>
+    <form action="" method="post">
+        {% csrf_token%}
+        <table border="6" align="center" cellpadding="10">
+            <tr>
+                <td colspan="2" align="center"><img src="{{ donateform.user_photo.url }}" alt="img" width="120" height="120"></td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{ donateform.user_name }}</td>
+            </tr>
+            <tr>
+            <td>Email</td>
+                <td>{{ donateform.user_email }}</td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td>{{ donateform.user_contact }}</td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td>{{ donateform.user_address }}</td>
+            </tr>
+        
+    <tr>
+    <td>Gender</td>
+    <td><input type="radio" required name="rdo_gender" value="Male" />Male
+        <input type="radio" name="rdo_gender" value="Female" />Female
+        <input type="radio" name="rdo_gender" value="Others" />Others
+</td></tr>
+    <tr>
+        <td>Blood Group</td>
+                <td><select name="bloodgroup" id="bloodgroup" required/>
+                        <option value="">--select--</option>
+                        {% for i in bloodgroup %}
+                        <option value="{{i.id}}">{{i.bloodgroup_name}}</option>
+                        {% endfor %}
+                    </select></td>
+    </tr>
+    <tr>
+        <td>DOB</td>
+        <td><input type="date" name="txt_dob" required/></td>
+    </tr>
+    <tr>
+        <td>Nearest Hospital</td>
+        <td><select name="txt_hospital" required id="hospital" value="{{hospital_data.hospital_name}}"/>
+            <option value="">--select--</option>
+            {% for i in hos %}
+            <option value="{{i.id}}">{{i.hospital_name}}</option>
+    {% endfor %}    
+    </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center"><input type="submit" value="Save"> <input type="reset" value="Cancel"></td>
+        
+    </tr>
+  
+        </table>
+        <table align="center" border="2">
+            <tr><td>Sl.no</td>
+            <td>Name</td>
+            <td>Photo</td>
+            <td>Address</td>
+            <td>Contact</td>
+            <td>Email</td>
+            <td>Gender</td>
+            <td>Blood Group</td>
+            <td>Hospital</td>
+            <td>Action</td></tr>
+            {% for i in data %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{i.user.user_name}}</td>
+                <td><img src="{{i.user.user_photo.url}}" width="150" height="150"></td>
+                <td>{{i.user.user_address}}</td>
+                <td>{{i.user.user_contact}}</td>
+                <td>{{i.user.user_email}}</td>
+                <td>{{i.donateform_gender}}</td>
+                <td>{{i.bloodgroup.bloodgroup_name}}</td>
+                <td>{{i.hospital.hospital_name}}</td>
+                <td><a href="{% url 'User:DonatingOrgans' i.id %}"> Add Organ
+                    <a href="{% url 'User:Nominee' i.id %}"> | Add Nominee</a>
+                    | <a href="{% url 'User:Death' i.id %}">Confirm Death</a>
+                </td>
+            </tr>
+            {% endfor %} 
+        </table> 
+    </form>
+</body>
+</html>
+{% endblock content %}
